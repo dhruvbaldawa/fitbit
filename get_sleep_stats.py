@@ -6,7 +6,7 @@ import json
 import fitbit
 
 from datetime import datetime
-from utils import gen_next_day
+from utils import gen_next_day, gen_previous_day
 
 ROOT = os.getcwd()
 CONFIG_FILE = os.path.join(ROOT, 'config.ini')
@@ -52,9 +52,11 @@ def download_sleep_stats(client, config):
     setup_filesystem()
     last_download_date = get_last_download_date()
     next_day = gen_next_day(last_download_date)
+    previous_day = gen_previous_day(datetime.today())
 
     from_date = next(next_day)
-    while from_date <= datetime.today():
+    yesterday = next(previous_day)
+    while from_date <= yesterday:
         logging.info('Downloading sleep data for {}'
                      .format(format_date(from_date)))
         data = client.get_sleep(from_date)
