@@ -5,8 +5,8 @@ import json
 
 import fitbit
 
-from datetime import datetime, timedelta
-
+from datetime import datetime
+from utils import gen_next_day
 
 ROOT = os.getcwd()
 CONFIG_FILE = os.path.join(ROOT, 'config.ini')
@@ -48,13 +48,6 @@ def get_last_download_date():
         return datetime.strptime(f.read(), DATE_FORMAT)
 
 
-def gen_next_day(start):
-    rdate = start
-    while True:
-        rdate = rdate + timedelta(days=1)
-        yield rdate
-
-
 def download_sleep_stats(client, config):
     setup_filesystem()
     last_download_date = get_last_download_date()
@@ -68,7 +61,7 @@ def download_sleep_stats(client, config):
         # @TODO: add error handling here
         filename = FILENAME_TEMPLATE.format(date=format_date(from_date))
         filepath = os.path.join(DATA_DIR, filename)
-        with open(filename, 'w') as f:
+        with open(filepath, 'w') as f:
             f.write(json.dumps(data))
 
         update_last_download_date(from_date)
