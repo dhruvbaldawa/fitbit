@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 
@@ -13,3 +14,7 @@ def gen_previous_day(start):
     while True:
         rdate = rdate - timedelta(days=1)
         yield rdate
+
+
+def setup_logging(logger, level):
+    logging.basicConfig(level=level)

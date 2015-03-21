@@ -6,7 +6,7 @@ import json
 import fitbit
 
 from datetime import datetime
-from utils import gen_next_day, gen_previous_day
+from utils import gen_next_day, gen_previous_day, setup_logging
 
 ROOT = os.getcwd()
 CONFIG_FILE = os.path.join(ROOT, 'config.ini')
@@ -21,10 +21,6 @@ logger = logging.getLogger(__name__)
 
 def format_date(date):
     return datetime.strftime(date, DATE_FORMAT)
-
-
-def setup_logging(level):
-    logging.basicConfig(level=level)
 
 
 def setup_filesystem():
@@ -85,5 +81,5 @@ def main():
 
 
 if __name__ == '__main__':
-    setup_logging(logging.INFO)
+    setup_logging(logger, logging.INFO)
     main()
